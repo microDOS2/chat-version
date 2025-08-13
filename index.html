@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>microDOS(2) — Precision Psychedelics, Simplified</title>
+  
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --slate-900:#0b1020; --slate-850:#111833; --slate-800:#17243a; --slate-750:#1d2c48;
+    --slate-700:#25344f; --slate-600:#2f415f; --slate-500:#4b5f86; --slate-400:#94a3b8; --slate-300:#cbd5e1; --white:#ffffff;
+    --sky-300:#7dd3fc; --sky-400:#38bdf8; --violet-500:#8b5cf6; --pink-500:#ec4899; --green-500:#22c55e; --red-500:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:var(--slate-900);color:var(--slate-300);}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+  .header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.75);backdrop-filter:blur(8px);border-bottom:1px solid #0f1a33}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  a{color:inherit}
+  nav a{color:#cbd5e1;text-decoration:none;margin:0 10px;padding:8px 10px;border-radius:10px;transition:background .2s}
+  nav a:hover{background:#1a2a4a;color:#fff}
+  .brand{color:#fff;font-weight:900;letter-spacing:.3px}
+  .grad{background:linear-gradient(90deg,var(--sky-400),var(--violet-500));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn{display:inline-block;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--sky-400),var(--violet-500));color:#fff;font-weight:800;text-decoration:none;border:none;cursor:pointer}
+  .btn.secondary{background:#2a3a5f;border:1px solid #3a4a6f}
+  .btn.ghost{background:transparent;border:1px solid #384766}
+  .section{padding:72px 0}
+  .title{color:#fff;font-weight:900;margin:0 0 10px;font-size:42px;letter-spacing:-.02em}
+  .subtitle{max-width:860px;margin:0 auto 6px;color:var(--slate-300);font-size:18px}
+  .card{background:var(--slate-800);border:1px solid #152238;border-radius:16px;padding:24px}
+  .grid{display:grid;gap:24px}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr} .title{font-size:32px}}
+  .kpi{background:rgba(30,41,59,.6);border-radius:12px;padding:16px;text-align:center}
+  .kpi .label{color:var(--slate-400);font-size:13px}
+  .kpi .value{color:#fff;font-weight:800;font-size:20px}
+  .footer{border-top:1px solid #1b2641;color:var(--slate-500);text-align:center;padding:36px 0;margin-top:48px}
+  /* Toast */
+  .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-150%);background:#14223d;color:#e2e8f0;padding:12px 16px;border-radius:10px;border:1px solid #2a3a5c;box-shadow:0 14px 40px rgba(0,0,0,.25);z-index:1000;transition:transform .5s}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+</script>
+
+  <style>
+    .hero{{padding:100px 0;background:radial-gradient(1200px 400px at 50% -80px, rgba(56,189,248,.25), transparent), 
+                     radial-gradient(900px 300px at 80% -40px, rgba(139,92,246,.18), transparent);}}
+    .headline{{text-align:center;color:#fff;font-weight:900;letter-spacing:-.03em;font-size:54px;line-height:1.05}}
+    .subline{{text-align:center;color:#cbd5e1;max-width:760px;margin:18px auto 28px}}
+    .pill{{display:inline-block;margin:6px 8px 0 0;padding:8px 12px;border-radius:999px;background:#1d2c48;border:1px solid #263a5f;color:#9fb3d1;font-size:13px}}
+    .pricing-card{{background:var(--slate-800);border:1px solid #152238;border-radius:16px;padding:24px;transition:transform .2s,box-shadow .2s}}
+    .pricing-card:hover{{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.25)}}
+    .badge{{display:inline-block;padding:6px 10px;border-radius:8px;background:linear-gradient(90deg,var(--sky-400),var(--violet-500));color:#fff;font-weight:800;font-size:12px}}
+    .video-frame{{aspect-ratio:16/9;width:100%;border:0;border-radius:14px;background:#0e1a33;box-shadow:0 20px 50px rgba(0,0,0,.35);}}
+    .dot{{height:10px;width:10px;border-radius:50%;background:#45597e;display:inline-block;margin:0 5px;cursor:pointer;border:2px solid transparent}}
+    .dot.active,.dot:hover{{background:#7dd3fc;border-color:#7dd3fc}}
+    .input{{width:100%;padding:12px;border-radius:10px;background:#132141;border:1px solid #293a5f;color:#e2e8f0}}
+    .input:focus{{outline:none;border-color:#38bdf8}}
+    .field{{margin-bottom:14px}}
+    .step-tabs div{{padding:14px 18px;border-bottom:2px solid transparent;cursor:default}}
+    .step-tabs .active{{color:#7dd3fc;border-bottom-color:#7dd3fc}}
+    .muted{{color:#9fb3d1;font-size:12px}}
+    .table{{width:100%;border-collapse:collapse}}
+    .table th,.table td{{border-bottom:1px solid #223251;padding:10px;text-align:left}}
+  </style>
+</head>
+<body>
+  
+<header class="header">
+  <div class="container row">
+    <div class="brand">microDOS<span class="grad">(2)</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="metocin.html">What is Metocin?</a>
+      <a href="microdosing.html">Microdosing Guide</a>
+      <a href="stories.html">User Stories</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </div>
+</header>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1 class="headline">One Pill. One Dose. <span class="grad">Pure Clarity.</span></h1>
+        <p class="subline">A legal, fast-acting microdose: 2mg Metocin (4‑HO‑MET) per scored tablet. ~10 minute onset, ~4 hour window, cleaner focus—minus the nausea.</p>
+        <div style="text-align:center;margin-top:10px;">
+          <span class="pill">Rapid onset (~10m)</span>
+          <span class="pill">Predictable ~4h</span>
+          <span class="pill">Scored 2mg tablet</span>
+          <span class="pill">Not federally scheduled</span>
+        </div>
+        <div style="text-align:center;margin-top:26px;">
+          <a href="#pricing" class="btn">See Pricing</a>
+          <a href="metocin.html" class="btn ghost" style="margin-left:10px">Learn Metocin</a>
+        </div>
+        <div class="container" style="max-width:900px;margin-top:42px">
+          <iframe id="heroVideo" class="video-frame" title="Product explainer"
+            src="https://www.youtube.com/embed/kPaZz9j5YwQ?rel=0&controls=1&autoplay=0&mute=0" allowfullscreen></iframe>
+          <div style="text-align:center;margin-top:10px">
+            <span class="dot active" onclick="swapVideo(0)" aria-label="Video 1"></span>
+            <span class="dot" onclick="swapVideo(1)" aria-label="Video 2"></span>
+            <span class="dot" onclick="swapVideo(2)" aria-label="Video 3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid grid-4">
+        <div class="kpi"><div class="label">Onset</div><div class="value">~10 min</div></div>
+        <div class="kpi"><div class="label">Peak</div><div class="value">1.5–2 hrs</div></div>
+        <div class="kpi"><div class="label">Duration</div><div class="value">~4 hrs</div></div>
+        <div class="kpi"><div class="label">Dose</div><div class="value">2 mg pill</div></div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section" style="padding-top:24px">
+      <div class="container">
+        <h2 class="title" style="text-align:center">Find Your Flow State</h2>
+        <p class="subtitle" style="text-align:center">Start with a trial, buy once, or subscribe for best value. Cancel anytime.</p>
+        <div class="grid grid-3" style="align-items:stretch;margin-top:22px">
+          <div class="pricing-card">
+            <div class="badge">TRY FIRST</div>
+            <h3 style="color:#fff;margin-top:8px">Trial Pack</h3>
+            <p style="color:#9fb3d1">Low-risk introduction.</p>
+            <div style="margin:18px 0"><span style="font-size:40px;font-weight:900;color:#fff">$9.99</span> <span class="muted">one-time</span></div>
+            <ul style="margin:0;padding-left:18px;line-height:1.9">
+              <li>3 pills (3 doses)</li>
+              <li>Free shipping</li>
+            </ul>
+            <div style="margin-top:20px">
+              <button class="btn secondary purchase" data-plan="trial">Start Trial</button>
+            </div>
+          </div>
+          <div class="pricing-card">
+            <div class="badge">NO COMMITMENT</div>
+            <h3 style="color:#fff;margin-top:8px">One-Time</h3>
+            <div class="grid grid-2">
+              <button class="btn ghost purchase" data-plan="onetime_10">10 — $45</button>
+              <button class="btn ghost purchase" data-plan="onetime_15">15 — $65</button>
+              <button class="btn ghost purchase" data-plan="onetime_30">30 — $95</button>
+              <button class="btn ghost purchase" data-plan="onetime_90">90 — $225</button>
+            </div>
+          </div>
+          <div class="pricing-card" style="border:2px solid #38bdf8;position:relative">
+            <div class="badge" style="position:absolute;right:16px;top:16px">BEST VALUE</div>
+            <h3 style="color:#fff;margin-top:8px">Subscribe & Save</h3>
+            <div style="display:flex;gap:8px;margin:8px 0 12px">
+              <button id="freqMonthly" class="btn secondary" onclick="setFreq('monthly')">Monthly</button>
+              <button id="freqBiweekly" class="btn ghost" onclick="setFreq('biweekly')">Bi‑weekly</button>
+            </div>
+            <div id="pricesMonthly">
+              <div class="grid grid-2">
+                <button class="btn ghost purchase" data-plan="sub_10_monthly">10 / mo — $38.25</button>
+                <button class="btn ghost purchase" data-plan="sub_15_monthly">15 / mo — $55.25</button>
+                <button class="btn ghost purchase" data-plan="sub_30_monthly">30 / mo — $80.75</button>
+                <button class="btn ghost purchase" data-plan="sub_90_monthly">90 / mo — $180</button>
+              </div>
+            </div>
+            <div id="pricesBiweekly" style="display:none">
+              <div class="grid grid-2">
+                <button class="btn ghost purchase" data-plan="sub_10_biweekly">10 / 2w — $36.00</button>
+                <button class="btn ghost purchase" data-plan="sub_15_biweekly">15 / 2w — $52.00</button>
+                <button class="btn ghost purchase" data-plan="sub_30_biweekly">30 / 2w — $76.00</button>
+                <button class="btn ghost purchase" data-plan="sub_90_biweekly">90 / 2w — $168.75</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkout -->
+    <section id="checkout" class="section" style="display:none;padding-top:24px">
+      <div class="container" style="max-width:980px">
+        <div class="card">
+          <h2 class="title" style="font-size:28px">Secure Checkout</h2>
+          <div class="step-tabs" style="display:flex;border-bottom:1px solid #213253;margin-bottom:18px">
+            <div id="tab1" class="active" style="flex:1;text-align:center">1. Shipping</div>
+            <div id="tab2" style="flex:1;text-align:center">2. Payment</div>
+            <div id="tab3" style="flex:1;text-align:center">3. Confirm</div>
+          </div>
+
+          <form id="checkoutForm" onsubmit="return false;">
+            <input type="hidden" id="plan" name="plan" />
+            <div id="step1">
+              <div class="grid grid-2">
+                <div class="field"><label>First name<input class="input" id="firstName" required></label></div>
+                <div class="field"><label>Last name<input class="input" id="lastName" required></label></div>
+              </div>
+              <div class="grid grid-2">
+                <div class="field"><label>Email<input class="input" id="email" type="email" required></label></div>
+                <div class="field"><label>Phone<input class="input" id="phone" type="tel" placeholder="+1 555 555 5555"></label></div>
+              </div>
+              <div class="field"><label>Address<input class="input" id="address" required placeholder="Street, Apt"></label></div>
+              <div class="grid grid-3">
+                <div class="field"><label>City<input class="input" id="city" required></label></div>
+                <div class="field"><label>State/Region<input class="input" id="state" required></label></div>
+                <div class="field"><label>Postal Code<input class="input" id="zip" required></label></div>
+              </div>
+              <div class="field"><label><input type="checkbox" id="saveInfo"> Save this info for future orders</label></div>
+              <div style="display:flex;gap:10px;justify-content:flex-end">
+                <button class="btn ghost" onclick="next(2)">Continue</button>
+              </div>
+            </div>
+
+            <div id="step2" style="display:none">
+              <div class="grid grid-3">
+                <div class="field"><label>Name on Card<input class="input" id="cardName" required></label></div>
+                <div class="field"><label>Card Number<input class="input" id="cardNum" pattern="[0-9 ]{{12,23}}" placeholder="4242 4242 4242 4242" required></label></div>
+                <div class="field"><label>Expiry (MM/YY)<input class="input" id="cardExp" pattern="(0[1-9]|1[0-2])\/\d{{2}}" placeholder="MM/YY" required></label></div>
+              </div>
+              <div class="grid grid-3">
+                <div class="field"><label>CVC<input class="input" id="cardCvc" pattern="\d{{3,4}}" required></label></div>
+                <div class="field"><label>Billing Postal Code<input class="input" id="billZip" required></label></div>
+                <div class="field"><label><input type="checkbox" id="consentStorePayment"> Consent to store payment info for future orders</label></div>
+              </div>
+              <div class="muted">Demo only: card fields are not processed. On Confirm, an order record is created for your Admin dashboard.</div>
+              <div style="display:flex;gap:10px;justify-content:space-between;margin-top:8px">
+                <button class="btn ghost" onclick="prev(1)">Back</button>
+                <button class="btn" onclick="next(3)">Review</button>
+              </div>
+            </div>
+
+            <div id="step3" style="display:none">
+              <div id="orderSummary" class="card" style="background:#122040;border-color:#1c2c4e;margin-bottom:14px"></div>
+              <div class="muted">By clicking Confirm, you agree to our Terms & Privacy and authorize the demo charge simulation.</div>
+              <div style="display:flex;gap:10px;justify-content:space-between;margin-top:8px">
+                <button class="btn ghost" onclick="prev(2)">Back</button>
+                <button class="btn" onclick="confirmOrder()">Confirm & Simulate Payment</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">© 2025 microDOS(2). All rights reserved.</footer>
+
+<script>
+const videoSources = [
+  "https://www.youtube.com/embed/kPaZz9j5YwQ?rel=0&controls=1&autoplay=0&mute=0",
+  "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&controls=1&autoplay=0&mute=0",
+  "https://www.youtube.com/embed/V-_O7nl0Ii0?rel=0&controls=1&autoplay=0&mute=0"
+];
+function swapVideo(i){ 
+  const v = document.getElementById('heroVideo'); 
+  document.querySelectorAll('.dot').forEach((d,ix)=>d.classList.toggle('active', ix===i));
+  v.src = videoSources[i]; 
+}
+
+let freq = 'monthly';
+function setFreq(f){
+  freq = f;
+  document.getElementById('pricesMonthly').style.display = (f==='monthly')?'block':'none';
+  document.getElementById('pricesBiweekly').style.display = (f==='biweekly')?'block':'none';
+  document.getElementById('freqMonthly').className = 'btn ' + (f==='monthly'?'secondary':'ghost');
+  document.getElementById('freqBiweekly').className = 'btn ' + (f==='biweekly'?'secondary':'ghost');
+}
+
+document.querySelectorAll('.purchase').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.getElementById('plan').value = btn.dataset.plan;
+    document.getElementById('checkout').style.display = 'block';
+    window.location.hash = '#checkout';
+    showToast('Selected: ' + btn.innerText.replace(/\s+/g,' ').trim());
+  });
+});
+
+function updateTabs(active){
+  ['tab1','tab2','tab3'].forEach((id,idx)=>{
+    document.getElementById(id).classList.toggle('active', idx+1===active);
+  });
+}
+function next(step){
+  for(let i=1;i<=3;i++){ document.getElementById('step'+i).style.display = (i===step)?'block':'none'; }
+  updateTabs(step);
+  if(step===3) renderSummary();
+}
+function prev(step){ next(step); }
+
+function getFormData(){
+  return {
+    plan: document.getElementById('plan').value,
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    city: document.getElementById('city').value.trim(),
+    state: document.getElementById('state').value.trim(),
+    zip: document.getElementById('zip').value.trim(),
+    saveInfo: document.getElementById('saveInfo').checked,
+    cardName: document.getElementById('cardName').value.trim(),
+    cardNum: document.getElementById('cardNum').value.trim(),
+    cardExp: document.getElementById('cardExp').value.trim(),
+    cardCvc: document.getElementById('cardCvc').value.trim(),
+    billZip: document.getElementById('billZip').value.trim(),
+    consentStorePayment: document.getElementById('consentStorePayment').checked
+  };
+}
+
+function renderSummary(){
+  const d = getFormData();
+  const el = document.getElementById('orderSummary');
+  el.innerHTML = `
+    <h3 style="margin:0 0 8px;color:#fff">Order Review</h3>
+    <table class="table">
+      <tr><th>Plan</th><td>${{d.plan}}</td></tr>
+      <tr><th>Name</th><td>${{d.firstName}} ${{d.lastName}}</td></tr>
+      <tr><th>Email</th><td>${{d.email}}</td></tr>
+      <tr><th>Ship to</th><td>${{d.address}}, ${{d.city}}, ${{d.state}} ${{d.zip}}</td></tr>
+      <tr><th>Save Info</th><td>${{d.saveInfo ? 'Yes' : 'No'}}</td></tr>
+      <tr><th>Store Payment Consent</th><td>${{d.consentStorePayment ? 'Yes' : 'No'}}</td></tr>
+    </table>
+  `;
+}
+
+function confirmOrder(){
+  const d = getFormData();
+  const id = 'ORD-' + Date.now();
+  const when = new Date().toISOString();
+  const record = Object.assign({{orderId:id, createdAt:when, status:'paid_simulated'}}, d);
+  const key = 'microdos_orders';
+  const prev = JSON.parse(localStorage.getItem(key) || '[]');
+  prev.push(record);
+  localStorage.setItem(key, JSON.stringify(prev));
+  showToast('Order ' + id + ' created');
+  window.location.href = 'admin.html#orders';
+}
+</script>
+</body>
+</html>

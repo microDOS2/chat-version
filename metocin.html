@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>What is Metocin (4‑HO‑MET)? — microDOS(2)</title>
+  
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --slate-900:#0b1020; --slate-850:#111833; --slate-800:#17243a; --slate-750:#1d2c48;
+    --slate-700:#25344f; --slate-600:#2f415f; --slate-500:#4b5f86; --slate-400:#94a3b8; --slate-300:#cbd5e1; --white:#ffffff;
+    --sky-300:#7dd3fc; --sky-400:#38bdf8; --violet-500:#8b5cf6; --pink-500:#ec4899; --green-500:#22c55e; --red-500:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:var(--slate-900);color:var(--slate-300);}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+  .header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.75);backdrop-filter:blur(8px);border-bottom:1px solid #0f1a33}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  a{color:inherit}
+  nav a{color:#cbd5e1;text-decoration:none;margin:0 10px;padding:8px 10px;border-radius:10px;transition:background .2s}
+  nav a:hover{background:#1a2a4a;color:#fff}
+  .brand{color:#fff;font-weight:900;letter-spacing:.3px}
+  .grad{background:linear-gradient(90deg,var(--sky-400),var(--violet-500));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn{display:inline-block;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--sky-400),var(--violet-500));color:#fff;font-weight:800;text-decoration:none;border:none;cursor:pointer}
+  .btn.secondary{background:#2a3a5f;border:1px solid #3a4a6f}
+  .btn.ghost{background:transparent;border:1px solid #384766}
+  .section{padding:72px 0}
+  .title{color:#fff;font-weight:900;margin:0 0 10px;font-size:42px;letter-spacing:-.02em}
+  .subtitle{max-width:860px;margin:0 auto 6px;color:var(--slate-300);font-size:18px}
+  .card{background:var(--slate-800);border:1px solid #152238;border-radius:16px;padding:24px}
+  .grid{display:grid;gap:24px}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr} .title{font-size:32px}}
+  .kpi{background:rgba(30,41,59,.6);border-radius:12px;padding:16px;text-align:center}
+  .kpi .label{color:var(--slate-400);font-size:13px}
+  .kpi .value{color:#fff;font-weight:800;font-size:20px}
+  .footer{border-top:1px solid #1b2641;color:var(--slate-500);text-align:center;padding:36px 0;margin-top:48px}
+  /* Toast */
+  .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-150%);background:#14223d;color:#e2e8f0;padding:12px 16px;border-radius:10px;border:1px solid #2a3a5c;box-shadow:0 14px 40px rgba(0,0,0,.25);z-index:1000;transition:transform .5s}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+</script>
+
+  <style>
+    .infobadge{{display:inline-block;padding:10px 14px;border-radius:12px;color:#fff;font-weight:800;border:1px solid rgba(255,255,255,.12)}}
+    .b1{{background:linear-gradient(90deg,#10b981,#34d399)}}
+    .b2{{background:linear-gradient(90deg,#7c3aed,#a78bfa)}}
+    .b3{{background:linear-gradient(90deg,#0ea5e9,#60a5fa)}}
+    .b4{{background:linear-gradient(90deg,#ec4899,#f472b6)}}
+  </style>
+</head>
+<body>
+  
+<header class="header">
+  <div class="container row">
+    <div class="brand">microDOS<span class="grad">(2)</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="metocin.html">What is Metocin?</a>
+      <a href="microdosing.html">Microdosing Guide</a>
+      <a href="stories.html">User Stories</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </div>
+</header>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="title" style="text-align:center">Metocin <span class="grad">(4‑HO‑MET)</span></h1>
+        <p class="subtitle" style="text-align:center">A precision psychedelic tryptamine first synthesized by Alexander “Sasha” Shulgin in the 1970s. Fast onset, predictable duration, and effects comparable to psilocin from magic mushrooms.</p>
+        <div class="grid grid-3" style="margin-top:22px">
+          <div class="card">
+            <h3 style="color:#fff;margin:0 0 8px">What is Metocin?</h3>
+            <ul style="margin:0;padding-left:18px;line-height:1.9">
+              <li><strong>Chemical:</strong> 4‑hydroxy‑N‑methyl‑N‑ethyltryptamine (4‑HO‑MET)</li>
+              <li><strong>Class:</strong> Psychedelic tryptamine</li>
+              <li><strong>Origin:</strong> First synthesized in the 1970s by Alexander “Sasha” Shulgin</li>
+              <li><strong>Relation:</strong> Produces effects comparable to psilocin from psilocybin mushrooms</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color:#fff;margin:0 0 8px">Core Specs</h3>
+            <div class="grid grid-2">
+              <div class="kpi"><div class="label">Onset</div><div class="value">~15 min</div></div>
+              <div class="kpi"><div class="label">Peak</div><div class="value">1.5–2 hrs</div></div>
+              <div class="kpi"><div class="label">Duration</div><div class="value">≈4 hrs</div></div>
+              <div class="kpi"><div class="label">Form</div><div class="value">2 mg scored tab</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="color:#fff;margin:0 0 8px">Why microDOS(2)?</h3>
+            <p>Clean, predictable, fast‑onset experience. No nausea. Scored tablets for precision.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+              <span class="infobadge b1">Rapid Onset</span>
+              <span class="infobadge b2">Predictable ~4h</span>
+              <span class="infobadge b3">Scored Tablet</span>
+              <span class="infobadge b4">Not Federally Scheduled</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="dose" class="section" style="padding-top:0">
+      <div class="container card">
+        <h3 style="color:#fff;margin:0 0 8px">Dosage Guide</h3>
+        <div class="grid grid-3">
+          <div class="kpi"><div class="label">Threshold</div><div class="value">1–2 mg</div></div>
+          <div class="kpi"><div class="label">Tablet</div><div class="value">2 mg</div></div>
+          <div class="kpi"><div class="label">Window</div><div class="value">~4 hours</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">© 2025 microDOS(2). All rights reserved.</footer>
+</body>
+</html>

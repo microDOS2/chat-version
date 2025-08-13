@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Microdosing Guide — microDOS(2)</title>
+  
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --slate-900:#0b1020; --slate-850:#111833; --slate-800:#17243a; --slate-750:#1d2c48;
+    --slate-700:#25344f; --slate-600:#2f415f; --slate-500:#4b5f86; --slate-400:#94a3b8; --slate-300:#cbd5e1; --white:#ffffff;
+    --sky-300:#7dd3fc; --sky-400:#38bdf8; --violet-500:#8b5cf6; --pink-500:#ec4899; --green-500:#22c55e; --red-500:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:var(--slate-900);color:var(--slate-300);}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+  .header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.75);backdrop-filter:blur(8px);border-bottom:1px solid #0f1a33}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  a{color:inherit}
+  nav a{color:#cbd5e1;text-decoration:none;margin:0 10px;padding:8px 10px;border-radius:10px;transition:background .2s}
+  nav a:hover{background:#1a2a4a;color:#fff}
+  .brand{color:#fff;font-weight:900;letter-spacing:.3px}
+  .grad{background:linear-gradient(90deg,var(--sky-400),var(--violet-500));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn{display:inline-block;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--sky-400),var(--violet-500));color:#fff;font-weight:800;text-decoration:none;border:none;cursor:pointer}
+  .btn.secondary{background:#2a3a5f;border:1px solid #3a4a6f}
+  .btn.ghost{background:transparent;border:1px solid #384766}
+  .section{padding:72px 0}
+  .title{color:#fff;font-weight:900;margin:0 0 10px;font-size:42px;letter-spacing:-.02em}
+  .subtitle{max-width:860px;margin:0 auto 6px;color:var(--slate-300);font-size:18px}
+  .card{background:var(--slate-800);border:1px solid #152238;border-radius:16px;padding:24px}
+  .grid{display:grid;gap:24px}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr} .title{font-size:32px}}
+  .kpi{background:rgba(30,41,59,.6);border-radius:12px;padding:16px;text-align:center}
+  .kpi .label{color:var(--slate-400);font-size:13px}
+  .kpi .value{color:#fff;font-weight:800;font-size:20px}
+  .footer{border-top:1px solid #1b2641;color:var(--slate-500);text-align:center;padding:36px 0;margin-top:48px}
+  /* Toast */
+  .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-150%);background:#14223d;color:#e2e8f0;padding:12px 16px;border-radius:10px;border:1px solid #2a3a5c;box-shadow:0 14px 40px rgba(0,0,0,.25);z-index:1000;transition:transform .5s}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+</script>
+
+  <style>
+    .guide-grid{{display:grid;gap:24px;margin-top:24px}}
+    .dose-card{{background:rgba(30,41,59,.6);border-radius:12px;padding:24px;display:flex;align-items:center;gap:24px;border:1px solid #1b2a44}}
+    .tablet-visual{{flex-shrink:0}}
+    .tablet{{width:80px;height:40px;background:linear-gradient(145deg,#9fb3d1,#cbd5e1);border-radius:20px;position:relative;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 12px rgba(0,0,0,.25)}}
+    .tablet::before{{content:'';position:absolute;height:100%;width:2px;background:rgba(0,0,0,.2)}}
+    .half .tablet{{width:40px;border-radius:20px 0 0 20px}}
+    .half .right-half{{width:40px;height:40px;background:linear-gradient(145deg,#9fb3d1,#cbd5e1);border-radius:0 20px 20px 0;opacity:.25;position:relative}}
+    .half .right-half::before{{content:'';position:absolute;height:100%;width:2px;background:rgba(0,0,0,.2);left:-1px}}
+    .quarter-container{{width:80px;height:40px;position:relative}}
+    .quarter .tablet-part{{position:absolute;width:40px;height:20px;background:linear-gradient(145deg,#9fb3d1,#cbd5e1)}}
+    .quarter .top-left{{top:0;left:0;border-radius:20px 0 0 0}}
+    .quarter .bottom-left{{bottom:0;left:0;border-radius:0 0 0 20px;opacity:.25}}
+    .quarter .right-half{{top:0;right:0;width:40px;height:40px;border-radius:0 20px 20px 0;opacity:.25;background:linear-gradient(145deg,#9fb3d1,#cbd5e1);position:relative}}
+    .quarter .right-half::before{{content:'';position:absolute;height:100%;width:2px;background:rgba(0,0,0,.2);left:-1px}}
+    .dose-info{{text-align:left;flex-grow:1}}
+    .dose-title{{color:#fff;font-weight:800;font-size:18px;margin:0}}
+    .dose-equivalent{{color:#7dd3fc;font-weight:800;font-size:16px;margin:4px 0}}
+    .dose-description{{color:#9fb3d1;font-size:14px;margin:0}}
+    @media(max-width:700px){{.dose-card{{flex-direction:column;text-align:center}}.dose-info{{text-align:center}}}}
+  </style>
+</head>
+<body>
+  
+<header class="header">
+  <div class="container row">
+    <div class="brand">microDOS<span class="grad">(2)</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="metocin.html">What is Metocin?</a>
+      <a href="microdosing.html">Microdosing Guide</a>
+      <a href="stories.html">User Stories</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </div>
+</header>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="title" style="text-align:center">Visual Microdosing Guide</h1>
+        <p class="subtitle" style="text-align:center">Each tablet is scored for precise dosing. Use this guide to tailor your experience.</p>
+
+        <div class="guide-grid">
+          <div class="dose-card">
+            <div class="tablet-visual full"><div class="tablet"></div></div>
+            <div class="dose-info">
+              <h3 class="dose-title">1 Tablet</h3>
+              <p class="dose-equivalent">≈ 500 mg shrooms</p>
+              <p class="dose-description">Creative or recreational dose. Expect pronounced effects within ~15 minutes, ~4h window.</p>
+            </div>
+          </div>
+          <div class="dose-card">
+            <div class="tablet-visual half" style="display:flex;align-items:center"><div class="tablet"></div><div class="right-half"></div></div>
+            <div class="dose-info">
+              <h3 class="dose-title">1/2 Tablet</h3>
+              <p class="dose-equivalent">≈ 250 mg shrooms</p>
+              <p class="dose-description">Standard microdose: noticeable lift in mood and creativity with minimal disruption.</p>
+            </div>
+          </div>
+          <div class="dose-card">
+            <div class="tablet-visual quarter">
+              <div class="quarter-container">
+                <div class="tablet-part top-left"></div>
+                <div class="tablet-part bottom-left"></div>
+                <div class="right-half"></div>
+              </div>
+            </div>
+            <div class="dose-info">
+              <h3 class="dose-title">1/4 Tablet</h3>
+              <p class="dose-equivalent">≈ 125 mg shrooms</p>
+              <p class="dose-description">Light microdose: subtle, sub‑perceptual focus and energy.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" style="padding-top:16px">
+      <div class="container card">
+        <h3 style="margin:0 0 8px;color:#fff">Safety & Use</h3>
+        <ul style="margin:0;padding-left:18px;line-height:1.9">
+          <li><strong>Start low:</strong> New users should begin with 1/4 tab to assess sensitivity.</li>
+          <li><strong>Legal:</strong> 4‑HO‑MET is not federally scheduled in the U.S.; verify your local laws.</li>
+          <li><strong>Set & setting:</strong> Even with microdoses, be intentional about environment.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">© 2025 microDOS(2). All rights reserved.</footer>
+</body>
+</html>
